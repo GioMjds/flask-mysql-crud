@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <title>MySQL Relational Database using Flask</title>
+</head>
+<body>
+    <h1>Update User</h1>
+    <form method="POST">
+        <label for="firstname">First Name:</label>
+        <input type="text" name="firstname" value="{{ data['firstname'] }}" required>
+        <label for="middlename">Middle Name:</label>
+        <input type="text" name="middlename" value="{{ data['middlename'] }}">
+        <label for="lastname">Last Name:</label>
+        <input type="text" name="lastname" value="{{ data['lastname'] }}" required>
+        <label for="birthday">Birthday:</label>
+        <input type="date" name="birthday" value="{{ data['birthday'] }}" required>
+        <label for="username">Username:</label>
+        <input type="text" name="username" value="{{ data['username'] }}" required>
+        <label for="password">Enter New Password:</label>
+        <input type="password" name="password" value="{{ data['password'] }}" required>
+        <button type="submit">Update User</button>
+    </form>
+    <a href="{{ url_for('crud.read') }}">Back to Users</a>
+</body>
+</html>

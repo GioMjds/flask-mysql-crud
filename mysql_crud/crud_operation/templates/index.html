@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+        <title>MySQL Relational Database using Flask</title>
+    </head>
+    <body>
+        <h1>Database: users_db</h1>
+        <h1>Table: users_info</h1>
+        <table>
+            <tr>
+                <td>First Name</td>
+                <td>Middle Name</td>
+                <td>Last Name</td>
+                <td>Birthday</td>
+                <td>Username</td>
+                <td>Password</td>
+            </tr>
+
+            {% for users in data %}
+            <tr>
+                <td>{{ users['firstname'] }}</td>
+                <td>{{ users['middlename'] }}</td>
+                <td>{{ users['lastname'] }}</td>
+                <td>{{ users['birthday'] }}</td>
+                <td>{{ users['username'] }}</td>
+                <td>{{ users['password'] }}</td>
+                <td>
+                    <a href="{{ url_for('crud.update', id=users['id']) }}">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a href="{{ url_for('crud.delete', id=users['id']) }}"
+                        onclick="return confirm('Are you sure you want to delete this user?')"
+                    >
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="{{ url_for('crud.create') }}">
+            <i class="fas fa-plus"></i> 
+        </a>
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
+    </body>
+</html>
