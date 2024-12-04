@@ -10,14 +10,15 @@
     <body>
         <h1>Database: users_db</h1>
         <h1>Table: users_info</h1>
-        <table>
-            <tr>
+        <table class="table">
+            <tr class="header">
                 <td>First Name</td>
                 <td>Middle Name</td>
                 <td>Last Name</td>
                 <td>Birthday</td>
                 <td>Username</td>
                 <td>Password</td>
+                <td>Actions</td>
             </tr>
 
             {% for users in data %}
@@ -41,9 +42,10 @@
             </tr>
             {% endfor %}
         </table>
-        <a href="{{ url_for('crud.create') }}">
-            <i class="fas fa-plus"></i> 
-        </a>
-        <script src="{{ url_for('static', filename='script.js') }}"></script>
+        <div class="add-user-container">
+            <a href="{{ url_for('crud.create') }}" class="add-button">
+                <i class="fas fa-plus"></i> Add User
+            </a>
+        </div>
     </body>
 </html>
