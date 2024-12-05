@@ -66,7 +66,7 @@ def read():
 @crud.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
     conn = mysql.connector.connect(**db_config)
-    cursor = conn.cursor()
+    cursor = conn.cursor(dictionary=True)
     if request.method == 'POST':
         firstname = request.form['firstname']
         middlename = request.form['middlename']
@@ -77,7 +77,7 @@ def update(id):
         
         try:
             cursor.execute('UPDATE users_info SET firstname=%s, middlename=%s, lastname=%s, birthday=%s, username=%s, password=%s WHERE id=%s', 
-                            (firstname, middlename, lastname, birthday, username, password, id))
+                        (firstname, middlename, lastname, birthday, username, password, id))
             conn.commit()
             return f'''
             <script>
@@ -86,21 +86,20 @@ def update(id):
             </script>'''
         except mysql.connector.Error as e:
             return f"Updating data failed! Error: {str(e)}"
-    else:
-        conn = mysql.connector.connect(**db_config)
-        cursor = conn.cursor()
-        try:
-            cursor.execute('SELECT * FROM users_info WHERE id=%s', (id,))
-            data = cursor.fetchone()
-            if data is None:
-                return 'Data not found!', 404
-            return render_template('update.html', data=data)
-        except mysql.connector.Error as e:
-            return f"Fetching data failed! Error: {str(e)}"
         finally:
             cursor.close()
             conn.close()
-            return render_template('update.html', data=data)
+    try:
+        cursor.execute('SELECT * FROM users_info WHERE ID=%s', (id,))
+        data = cursor.fetchone()
+        if data is None:
+            return 'Data not found', 404
+        return render_template('update.html', data=data)
+    except mysql.connector.Error as e:
+        return f"Fetching data failed! Error: {str(e)}"
+    finally:
+        cursor.close()
+        conn.close()
     
 # Delete operation
 @crud.route('/delete/<int:id>', methods=['GET', 'POST'])
